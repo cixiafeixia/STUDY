@@ -1,0 +1,1 @@
+https://hub.docker.com/，这个是docker官方的镜像库，要找镜像个话建议就用找官方的镜像；第二个就是 https://www.docker-cn.com/registry-mirror，这是docker中国镜像加速库，嫌官方下载的太慢可以用这个。
