@@ -1,0 +1,8 @@
+Win&Linux双系统时间不同步：
+修改Linux方案：
+timedatectl set-local-rtc 1 --adjust-system-clock
+timedatectl set-ntp 0
+
+修改Windows方案：
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation]
+    "RealTimeIsUniversal"=dword:00000001

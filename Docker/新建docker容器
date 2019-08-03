@@ -1,0 +1,70 @@
+# 搜索镜像
+docker search <image> # 在docker index中搜索image
+# 下载镜像
+docker pull <image>  # 从docker registry server 中下拉image
+# 查看镜像 
+    docker images： # 列出images
+    docker images -a # 列出所有的images（包含历史）
+    docker rmi  <image ID>： # 删除一个或多个image
+
+# 使用镜像创建容器
+    docker run -i -t sauloal/ubuntu14.04
+    docker run -i -t sauloal/ubuntu14.04 /bin/bash # 创建一个容器，让其中运行(一般用这个)
+    bash 应用，退出后容器关闭
+# 查看容器
+    docker ps ：列出当前所有正在运行的container
+    docker ps -l ：列出最近一次启动的container
+    docker ps -a ：列出所有的container（包含历史，即运行过的container）
+    docker ps -q ：列出最近一次运行的container ID
+# 再次启动容器
+    docker start/stop/restart <container> #：开启/停止/重启container
+    docker start [container_id] #：再次运行某个container （包括历史container）
+    docker attach [container_id] #：连接一个正在运行的container实例（即实例须   
+             为start状态，可以多个窗口同时attach 一个container实例）
+    docker start -i <container> #：启动一个container并进入交互模式（相当于先
+         start，在attach）
+    docker run -i -t <image> /bin/bash #：使用image创建container并进入交互模
+             式, login shell是/bin/bash
+    docker run -i -t -p <host_port:contain_port> #：映射 HOST 端口到容器，方便
+          外部访问容器内服务，host_port 可以省略，省略表示把 container_port 映射到
+          一个动态端口。
+    #注：使用start是启动已经创建过得container，使用run则通过image开启一个新的
+          container。
+
+# 删除容器
+    docker rm <container...> #：删除一个或多个container
+    docker rm `docker ps -a -q` #：删除所有的container
+    docker ps -a -q | xargs docker rm #：同上, 删除所有的container
+	
+	
+-----------------------------------------------------------------------------------------
+
+ Docker 容器镜像删除
+
+1.停止所有的container，这样才能够删除其中的images：
+
+docker stop $(docker ps -a -q)
+
+如果想要删除所有container的话再加一个指令：
+
+docker rm $(docker ps -a -q)
+
+2.查看当前有些什么images
+
+docker images
+
+3.删除images，通过image的id来指定删除谁
+
+docker rmi <image id>
+
+想要删除untagged images，也就是那些id为<None>的image的话可以用
+
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+
+要删除全部image的话
+
+docker rmi $(docker images -q)
+
+
+
+
